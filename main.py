@@ -30,6 +30,13 @@ color = color_passive
   
 active = False
   
+
+screen.fill((255, 255, 255))
+
+    # draw rectangle and argument passed which should
+    # be on screen
+pygame.draw.rect(screen, color, input_rect)
+
 while True:
     for event in pygame.event.get():
   
@@ -37,12 +44,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-  
-        """if event.type == pygame.MOUSEBUTTONDOWN:
-            if input_rect.collidepoint(event.pos):
-                active = True
-            else:
-                active = False"""
   
         if event.type == pygame.KEYDOWN:
   
@@ -58,16 +59,7 @@ while True:
                 user_text += event.unicode
       
     # it will set background color of screen
-    screen.fill((255, 255, 255))
-  
-    if active:
-        color = color_active
-    else:
-        color = color_passive
-          
-    # draw rectangle and argument passed which should
-    # be on screen
-    pygame.draw.rect(screen, color, input_rect)
+    
   
     text_surface = base_font.render(user_text, True, (255, 255, 255))
       
