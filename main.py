@@ -2,85 +2,73 @@ import pygame
 import sys
   
   
-# pygame.init() will initialize all
-# imported module
+# initializing the constructor
 pygame.init()
   
-clock = pygame.time.Clock()
+# screen resolution
+res = (720,720)
   
-# it will display on screen
-screen = pygame.display.set_mode([600, 500])
+# opens up a window
+screen = pygame.display.set_mode(res)
   
-# basic font for user typed
-base_font = pygame.font.Font(None, 32)
-user_text = ''
+# white color
+color = (255,255,255)
   
-# create rectangle
-input_rect = pygame.Rect(200, 200, 140, 32)
+# light shade of the button
+color_light = (170,170,170)
   
-# color_active stores color(lightskyblue3) which
-# gets active when input box is clicked by user
-color_active = pygame.Color('lightskyblue3')
+# dark shade of the button
+color_dark = (100,100,100)
   
-# color_passive store color(chartreuse4) which is
-# color of input box.
-color_passive = pygame.Color('chartreuse4')
-color = color_passive
+# stores the width of the
+# screen into a variable
+width = screen.get_width()
+
+print(width)
   
-active = False
-screen.fill((0,0,0))  
+# stores the height of the
+# screen into a variable
+height = screen.get_height()
+  
+# defining a font
+smallfont = pygame.font.SysFont('Corbel',35)
+  
+# rendering a text written in
+# this font
+text = smallfont.render('quit' , True , color)
+  
 while True:
-    for event in pygame.event.get():
-  
-      # if user types QUIT then the screen will close
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-  
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if input_rect.collidepoint(event.pos):
-                active = True
-            else:
-                active = False
-  
-        if event.type == pygame.KEYDOWN:
-  
-            # Check for backspace
-            if event.key == pygame.K_BACKSPACE:
-  
-                # get text input from 0 to -1 i.e. end.
-                user_text = user_text[:-1]
-  
-            # Unicode standard is used for string
-            # formation
-            else:
-                user_text += event.unicode
       
-    # it will set background color of screen
-    
-  
-    if active:
-        color = color_active
-    else:
-        color = color_passive
+    for ev in pygame.event.get():
           
-    # draw rectangle and argument passed which should
-    # be on screen
-    pygame.draw.rect(screen, color, input_rect)
-  
-    text_surface = base_font.render(user_text, True, (255, 255, 255))
+        if ev.type == pygame.QUIT:
+            pygame.quit()
+              
+        #checks if a mouse is clicked
+        if ev.type == pygame.MOUSEBUTTONDOWN:
+              
+            #if the mouse is clicked on the
+            # button the game is terminated
+            if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:
+                print("skafhkfsahfkaslf")
+                  
+    # fills the screen with a color
+    screen.fill((60,25,60))
       
-    # render at position stated in arguments
-    screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
+    # stores the (x,y) coordinates into
+    # the variable as a tuple
+    mouse = pygame.mouse.get_pos()
       
-    # set width of textfield so that text cannot get
-    # outside of user's text input
-    input_rect.w = max(100, text_surface.get_width()+10)
+    # if mouse is hovered on a button it
+    # changes to lighter shade 
+    if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40:
+        pygame.draw.rect(screen,color_light,[width/2,height/2,140,40])
+          
+    else:
+        pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40])
       
-    # display.flip() will update only a portion of the
-    # screen to updated, not full area
-    pygame.display.flip()
+    # superimposing the text onto our button
+    screen.blit(text , (width/2+50,height/2))
       
-    # clock.tick(60) means that for every second at most
-    # 60 frames should be passed.
-    clock.tick(60)
+    # updates the frames of the game
+    pygame.display.update()
